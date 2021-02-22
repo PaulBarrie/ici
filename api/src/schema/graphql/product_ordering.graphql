@@ -1,0 +1,33 @@
+type ProductOrdering {
+    id: Int!
+    product: Product!
+    order: Order
+    quantity: Float!
+    total_price: Float!
+}
+
+input ProductOrderingInput {
+    product_id: Int!
+    quantity: Float!
+}
+
+type FullOrder {
+    productOrdering: ProductOrdering,
+    order: Order
+}
+
+type FullOrderList {
+    productOrdering: [ProductOrdering],
+    order: Order
+}
+
+type Query {
+    basket: [ProductOrdering]
+    validatedOrders: FullOrderList
+}
+
+type Mutation {
+    addToBasket(p_order:ProductOrderingInput!): FullOrder
+    removeProductFromBasket(p_order_id: Int): ResponseMessage
+    deleteProductOrdering(id: Int!): ResponseMessage
+}

@@ -1,0 +1,21 @@
+type Order {
+    id: Int!
+    time_order: Date!
+    sent: Boolean!
+    time_sent: Date
+    received: Boolean!  
+    time_rec: Date
+    client: Client!
+}
+
+input OrderInput {
+    time_order: Date!
+    client: ClientInput!
+}
+
+
+type Mutation {
+    createOrder(order:OrderInput!):Order
+    updateOrder(order:OrderInput!):Order
+    deleteOrder(order:Int): ResponseMessage
+}

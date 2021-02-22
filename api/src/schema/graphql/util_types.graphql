@@ -1,0 +1,6 @@
+scalar Date 
+
+type ResponseMessage {
+    code: Int,
+    message: String
+}

@@ -1,0 +1,13 @@
+@import "./views/stores/StoreCard/StoreCard.css";
+@import "./views/stores/StoreCard/ProductList.css";
+@import 'reactjs-popup/dist/index.css';
+
+.leaflet-container {
+    width: 100%;
+    height: 100vh;
+}
+
+.slider-form {
+  position: relative;
+  left: 70%
+}

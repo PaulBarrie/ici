@@ -1,0 +1,28 @@
+type Address {
+    id: Int!
+    location: [Float]
+    street_nb: String!
+    street_name: String!
+    post_code: String!
+    city: String!
+    country: String
+}
+
+input AddressInput {
+    street_nb: String!
+    street_name: String!
+    post_code: String!
+    city: String!
+    country: String
+    user_type: String!
+}
+
+# type Query {
+#     Addresses(uid:Int!): [Address]
+# }
+
+# type Mutation {
+#     addAddress(cli_addr:AddressInput!):Address
+#     updateAddress(cli_addr: AddressInput!):Address
+#     deleteAddress(id: Int!): ReturnMessage
+# }

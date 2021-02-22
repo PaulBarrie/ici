@@ -1,0 +1,14 @@
+type ProductCategory {
+  id: Int!
+  name: String!
+}
+
+# type Query {
+  
+# }
+
+# type Mutation {
+#   createProductCategory(name: String!): ProductCategory
+#   updateProductCategory(p_order:String!): ProductCategory
+#   deleteProductCategory(id: Int!): ReturnMessage
+# }

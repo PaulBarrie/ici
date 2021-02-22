@@ -1,0 +1,34 @@
+defaultEntryPoints = ["https", "http"]
+
+[accessLog]
+[traefikLog]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [entryPoints.https.tls.defaultCertificate]
+        certFile = "/certs/ici-certificate.crt"
+        keyFile = "/certs/ici-key.key"
+
+
+
+[tls]
+  [[tls.certificates]]
+    certFile = "/certs/ici-certificate.crt"
+    keyFile = "/certs/ici-key.key"
+
+[web]
+address = ":8080"
+[web.auth.basic]
+  users = ["admin:c498fb339466c3c5a90d18fe3da8b9399adc0bb8"]
+  
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "ici.localhost"
+watch = true
+exposedbydefault = true

@@ -1,0 +1,6 @@
+type Session {
+    uid: Int
+    role: String
+    token: String
+    remember: Boolean
+}

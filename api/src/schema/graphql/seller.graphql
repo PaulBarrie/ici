@@ -1,0 +1,33 @@
+type Seller { 
+  id: Int
+  name: String
+  email: String
+  phone: String
+  password: String
+  picture: String
+  address: Address
+}
+
+input SellerInput {
+    id: Int
+    name: String
+    email: String
+    phone: String
+    password: String
+    picture: String
+}
+
+
+type Query {
+  seller(id:Int, email:String, phone:String):Seller
+  sellersAround(dist: Float!, from: [Float]):[Seller]
+}
+
+type Mutation { 
+  createSeller(seller: SellerInput!):Seller
+  loginSeller(identifier: String!, password: String!, remember: Boolean):Session
+  # isLoggedIn(session: Session!): Boolean
+  logoutSeller(token: String):ResponseMessage
+  updateSeller(where:SellerInput!, update: SellerInput!):Seller
+  deleteSeller(pid: Int!): ResponseMessage
+}

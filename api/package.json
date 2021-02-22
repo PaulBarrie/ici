@@ -1,0 +1,45 @@
+{
+  "name": "here_api",
+  "version": "1.0.0",
+  "description": "api supporting here selling website for local products",
+  "scripts": {
+    "start": "nodemon index.js ",
+    "serve": "nodemon --exec npm start",
+    "watch-node": "nodemon dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "keywords": [
+    "Graphql",
+    "node",
+    "javascript"
+  ],
+  "dependencies": {
+    "@graphql-tools/load-files": "^6.2.4",
+    "@graphql-tools/merge": "^6.2.5",
+    "@graphql-tools/schema": "^7.0.0",
+    "apollo-link-state": "^0.4.2",
+    "apollo-server-express": "^2.18.2",
+    "babel-install": "^2.1.0",
+    "class-validator": "^0.11.1",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "graphql": "^14.7.0",
+    "graphql-import": "^1.0.2",
+    "graphql-tools": "^6.2.4",
+    "jest": "^26.5.2",
+    "nodemon": "^2.0.4",
+    "express-reload": "^1.2.0",
+    "pg": "^8.4.1",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0",
+    "type-graphql": "^0.17.6"
+  },
+  "devDependencies": {
+    "faker": "^5.1.0"
+  }
+}

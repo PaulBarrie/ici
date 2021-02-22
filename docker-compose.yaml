@@ -1,0 +1,172 @@
+version: "3.5"
+services:
+  proxy:
+    image: traefik:v2.3
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    container_name: ${PROXY_CONTAINER}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./docker/ssl/certs:/certs
+      # - ./docker/traefik/config/traefik.toml:/traefik.toml
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker=true
+      - --providers.file.directory=/etc/traefik/dynamic_conf
+    labels:
+      - traefik.enable=true
+      - providers.docker=true
+      - traefik.http.routers.traefik=true
+      # - entryPoints.web.address=:80
+      # - providers.providersThrottleDuration=2s
+      # - providers.docker.watch=true
+      # - providers.docker.swarmMode=true
+      # - providers.docker.swarmModeRefreshSeconds=15s
+      # - providers.docker.exposedbydefault=false
+      # - traefik.frontend.rule=Host("proxy.${BASE_DOMAIN}")
+
+      # - traefik.frontend.entryPoints=http,https
+      # - traefik.backend=${PROXY_CONTAINER}
+      # - traefik.port=8080
+      # - log.filePath=traefik.log
+      # - log.format=json
+      # - log.level="DEBUG"
+      # - entryPoints.websecure.address=:443
+      # Traefik for HTTP
+      # - traefik.http.routers.proxy.entryPoints=insecure
+      # - traefik.http.routers.proxy.rule=Host(`proxy.${BASE_DOMAIN}`)
+      # Traefik middleware for redirection
+
+  
+  app-client:
+    build:
+      context: ./app-cli
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+        - NODE_ENV=development
+
+    volumes:
+      - ./app-cli:/usr/src/app:rw
+      - /usr/src/app/node_modules
+    working_dir: /usr/src/app
+    command: npm start
+    ports:
+      - "${APP_CLI_PORT}:3000"
+    depends_on:
+      - api
+    networks:
+      - proxy
+    stdin_open: true
+    container_name: ${CLI_CONTAINER}
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.client-app.rule=Host(`client.${BASE_DOMAIN}`)   
+      - traefik.http.routers.client-app.tls=true
+
+  
+  app-seller:
+    build:
+      context: ./app-seller
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+        - NODE_ENV=development
+    volumes:
+      - ./app-seller:/usr/src/app:rw
+      - /usr/src/app/node_modules
+    working_dir: /usr/src/app
+    command: npm start
+    ports:
+      - "${APP_SELLER_PORT}:3000"
+    depends_on:
+      - api
+    networks:
+      - proxy
+    stdin_open: true
+    container_name: ${SELLER_CONTAINER}
+    labels:
+      - traefik.enable=true
+      - traefik.tags=public
+      - traefik.http.routers.seller-app.rule=Host(`seller.${BASE_DOMAIN}`)   
+      - traefik.http.routers.seller-app.tls=true
+
+  api:
+    build: ./api
+    depends_on:
+      - pgsql
+    restart: on-failure
+    environment:
+      NODE_ENV: development
+      PORT: ${API_PORT}
+      HOST: 0.0.0.0
+    env_file: 
+      - .env
+      - ./docker/sql_db/.pg_env
+    ports:
+      - ${API_PORT}:${API_PORT}
+    working_dir: /home/api
+    command: npm start
+    networks: 
+      - proxy
+    volumes:
+      - ./api:/home/api
+      - /home/api/node_modules
+    networks: 
+      - proxy
+    container_name: ${API_CONTAINER}
+    labels:
+      - traefik.enable=true
+      - traefik.tags=public
+      - traefik.http.routers.api.rule=Host(`api.${BASE_DOMAIN}`)
+
+
+  pgsql:
+    build: 
+      context: ./docker/sql_db
+    restart: on-failure
+    env_file:
+      - ./docker/sql_db/.pg_env
+    volumes:
+        - ./Data/database:/var/lib/postgresql
+    container_name: ${PG_CONTAINER}
+    networks: 
+      - proxy
+    ports:
+      - ${PG_PORT}
+    labels:
+      - traefik.enable=true
+      - traefik.tags=public
+      - traefik.http.routers.pgsql.rule=Host(`pgsql.${BASE_DOMAIN}`)
+
+  # DEVELOPEMENT TOOLS
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - ${ADMINER_PORT}:8080
+    networks:
+      - proxy
+    container_name: ${ADMINER_CONTAINER}
+    labels:
+      - traefik.enable=true
+      - traefik.tags=public
+      - traefik.http.routers.adminer.rule=Host(`adminer.${BASE_DOMAIN}`)
+
+networks: 
+  proxy:
+    external: true
+
+  

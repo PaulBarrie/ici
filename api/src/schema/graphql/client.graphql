@@ -1,0 +1,29 @@
+type Client {
+    id: Int!
+    first_name: String!
+    last_name: String!
+    email: String!
+    phone: String!
+    loc: [Float]
+    password: String!
+    picture: String    
+}
+
+input ClientInput {
+    first_name: String!
+    last_name: String!
+    email: String!
+    phone: String!
+    password: String!
+}
+
+type Query {
+    client(id: Int!):[Client]
+}
+
+type Mutation {
+    createClient(client:ClientInput!):Client
+    loginClient(identifier: String!, password: String!, remember: Boolean):Session
+    updateClient(cli_addr:ClientInput!):Client
+    deleteClient(id: Int!): ResponseMessage
+}

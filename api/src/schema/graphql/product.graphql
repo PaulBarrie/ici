@@ -1,0 +1,42 @@
+type Product {
+    id: Int!
+    name: String!
+    seller: Seller
+    q_available:  Int
+    description: String
+    expiration_date: Date
+    price_ht: Float
+    tax_rate: Float!
+    measure_unit: String
+    picture: String
+    category: ProductCategory
+}
+
+input ProductInput {
+    id: Int
+    name: String
+    seller: SellerInput
+    quantity:  [Int]
+    expiration_date: [Date]
+    price_ht: Float!
+    tax_rate: Float!
+    measure_unit: String
+    picture: String
+    category: String
+}
+
+type ProductList {
+    products: [Product]
+    nb_products: Int
+}
+
+type Query {
+    productSeller(id: Int!, page: Int, perpage: Int): ProductList
+}
+
+
+type Mutation {
+    createProduct(product: ProductInput!):Product
+    updateProduct(product: ProductInput!):Product
+    deleteProduct(id: Int!): ResponseMessage
+}

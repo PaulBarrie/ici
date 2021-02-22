@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "user_pg",
+    "password": "etna",
+    "database": "reldb",
+    "host": "pgsql",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "user_pg",
+    "password": "etna",
+    "database": "reldb",
+    "host": "pgsql",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "user_pg",
+    "password": "etna",
+    "database": "reldb",
+    "host": "pgsql",
+    "dialect": "postgres"
+  }
+}

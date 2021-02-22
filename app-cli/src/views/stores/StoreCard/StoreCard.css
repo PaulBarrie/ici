@@ -1,0 +1,65 @@
+body {
+    font-family: sans-serif;
+  }
+  
+  .container {
+    position: relative;
+    margin: 0 auto;
+
+  }
+  
+  .display {
+    position: relative;
+    z-index: 1;
+    width: 80%;
+    height: 100%;
+    background-color: #5a564c;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 350ms;
+  }
+  
+  .display:active {
+    background-color: #000000;
+  }
+  
+.store-card {
+    position: relative;
+    top: 0px;
+    z-index: 1;
+    height: 100vh;
+    width: 70vw;
+    box-sizing: border-box;
+    padding: 0 5px;
+    overflow-y: scroll;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+.back-button {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
+
+.store-details {
+  position: relative;
+  top: 10px;
+  left: 20vw;
+}
+
+/* #store-details {
+    width: 50%;
+    margin: 0 auto;
+} */
+
+.product-list {
+  padding-top: 20px;
+  width: 100%;
+}
+
+.prodcut-pagination {
+  vertical-align: middle;
+}
