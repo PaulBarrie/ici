@@ -11,6 +11,6 @@ The project is orchestrated via `docker-compose` which powers several services:
 To build the images and run the asociated containers, cd into project and run:
 > `make up`
 
-To apply migrations and run fixtures for demonstartion purpose, run:
+To apply migrations and run fixtures for demonstration purpose, run:
 
 > `make migrations fixtures`
